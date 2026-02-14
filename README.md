@@ -21,61 +21,58 @@ Developed by: Aswath Ragavan MG
 RegisterNumber:  25013229
 */
 import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
 
-df = pd.read_csv(r"C:\Users\acer\Downloads\student_scores.csv")
+data = {
+    'Hours_Studied': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    'Marks_Scored': [35, 40, 50, 55, 60, 65, 70, 75, 80, 85]
+}
 
-print(df.head(10))
+df = pd.DataFrame(data)
+print("Dataset:")
+print(df)
 
-plt.scatter(df['Hours'], df['Scores'])
-plt.xlabel('Hours')
-plt.ylabel('Scores')
-plt.title('Hours vs Scores')
+X = df[['Hours_Studied']]
+y = df['Marks_Scored']
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+
+print("\nModel Evaluation:")
+print("Slope (m):", model.coef_[0])
+print("Intercept (c):", model.intercept_)
+print("Mean Squared Error:", mean_squared_error(y_test, y_pred))
+print("R2 Score:", r2_score(y_test, y_pred))
+
+plt.scatter(X, y, color='blue', label='Actual Data')
+plt.plot(X, model.predict(X), color='red', label='Regression Line')
+plt.xlabel('Hours Studied')
+plt.ylabel('Marks Scored')
+plt.title('Simple Linear Regression: Hours vs Marks')
+plt.legend()
 plt.show()
 
+hours = float(input("\nEnter number of study hours: "))
+predicted_marks = mo_
 
-X = df[['Hours']]   
-y = df['Scores']    
-
-X_train, X_test, Y_train, Y_test = train_test_split(X, y, test_size=0.2, random_state=0)
-
-lr = LinearRegression()
-lr.fit(X_train, Y_train)
-
-single_pred = lr.predict(X_test.iloc[0].values.reshape(1, 1))
-print("Single Prediction:", single_pred)
-
-plt.scatter(df['Hours'], df['Scores'])
-plt.plot(X_train, lr.predict(X_train), color='red')
-plt.xlabel('Hours')
-plt.ylabel('Scores')
-plt.title('Regression Line')
-plt.show()
-
-print("Coefficient:", lr.coef_)
-print("Intercept:", lr.intercept_)
-
-y_pred = lr.predict(X_test)
-
-mse = mean_squared_error(Y_test, y_pred)
-rmse = np.sqrt(mse)
-mae = mean_absolute_error(Y_test, y_pred)
-r2 = r2_score(Y_test, y_pred)
-
-print("MSE:", mse)
-print("RMSE:", rmse)
-print("MAE:", mae)
-print("R2 Score:", r2)
 ```
 
 ## Output:
-<img width="911" height="624" alt="image" src="https://github.com/user-attachments/assets/a911c0d4-5559-44bc-86e1-1dd9f8a048f7" />
-<img width="882" height="461" alt="Screenshot 2026-02-13 083607" src="https://github.com/user-attachments/assets/76f5a5ee-82a2-4fd4-9006-e777a6743ff4" />
-<img width="877" height="633" alt="Screenshot 2026-02-13 083632" src="https://github.com/user-attachments/assets/0ab85426-0230-4500-aa6e-448c3a4954d6" />
+<img width="609" height="373" alt="image" src="https://github.com/user-attachments/assets/cb009c5c-6993-4f70-a0f1-43ad03403ca6" />
+<img width="856" height="460" alt="image" src="https://github.com/user-attachments/assets/e5b093a6-2812-4fce-b81c-969d15a1772c" />
+
+
+
 
 
 
